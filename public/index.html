@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="../src/output.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+        }
+
+
+        .bigbox {
+            border: 0px solid white;
+        }
+
+        .box1 {
+            width: 400px;
+            height: 300px;
+        }
+
+        #copy-button {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body class="bg-slate-900/95">
+
+    <!-- <div id="blockchainData"></div>
+    <input type="text" id="input1">
+    <button onclick="sendPostRequest()">Send post Request</button>
+
+    <button id="connect-button">Connect MetaMask</button>
+
+    <button id="send-button">send</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Previous Hash</th>
+                <th>Hash</th>
+                <th>Data</th>
+                <th>Nonce</th>
+                <th>Difficulty</th>
+            </tr>
+        </thead>
+        <tbody id="blockchainTableBody"></tbody> <!-- Table body for blockchain data -->
+    <!-- </table>  -->
+
+
+    <nav class=" bg-slate-900/75 text-white  py-8">
+        <span>
+            <img class="w-5 mx-12 absolute"
+                src="https://iconape.com/wp-content/files/gu/370855/svg/ethereum-logo-icon-png-svg.png" alt="">
+        </span>
+        <p class="text-lg mx-20 w-max" style="border:  0px solid white;">BLOCKCHAIN</p>
+
+        <div class=" justify-end items-end flex mr-10 ">
+            <button id="connect-button"
+                class="border-emerald-800 border-2 p-1 rounded-lg absolute hover:bg-gray-950 hover:text-slate-500 shadow-lg shadow-indigo-500/50">Connect
+                To MetaMask</button>
+        </div>
+
+
+
+
+    </nav>
+    <br>
+    <main>
+        <div class="flex flex-wrap">
+            <p class="text-sky-50 text-lg my-7 mx-20">Address</p>
+            <p id="Holder_address" class="text-slate-100 my-6 absolute mx-40 p-1 "></p>
+            <span>
+                <button id="copy-button" onclick="Copy_button()"
+                    class=" absolute mx-80 my-7  w-8 rounded text-slate-500 hover:border hover:border-gray-600">
+                    <ion-icon id="copyicon" name="copy-outline"></ion-icon></button>
+            </span>
+
+        </div>
+
+
+        <hr class="border-gray-950">
+        <br>
+
+        <div class="bigbox flex flex-col lg:flex-row justify-evenly ">
+
+            <div class="bg-slate-900 shadow-lg shadow-cyan-500/50 rounded-lg overflow-hidden max-w-sm box1">
+                <div class="px-6 py-4">
+                    <p class="text-slate-100">Overview</p><br>
+                    <p class="text-gray-500 text-sm">ETH BALANCE</p>
+                    <p class="text-slate-100 text-sm" id="Holder_Balance">0.00</p><br>
+                    <p class="text-gray-500 text-sm">TOTAL NUMBER OF BLOCKS</p>
+                    <p class="text-slate-100" id="total_number_of_blocks">0</p><br>
+                    <p class="text-gray-500 text-sm">STATUS</p>
+                    <p class="text-slate-100" id="Connection_status">Not Connected</p>
+
+                </div>
+            </div>
+
+            <div class=" hidden lg:block w-200px"></div>
+            <div class="bg-slate-900 shadow-lg shadow-cyan-500/50 rounded-lg overflow-hidden max-w-sm box1">
+                <div class="px-6 py-4">
+                    <p class="text-slate-100">Make Transaction</p><br>
+                    <p class="text-slate-100">To:-</p>
+                    <input type="text" id="OtherAccount"
+                        class=" rounded-lg w-full bg-gray-800 text-slate-300 p-1"><br><br>
+                    <p class="text-slate-100">Amount:-</p>
+                    <input type="number" id="AmountToSend"
+                        class=" rounded-lg w-full bg-gray-800 text-slate-300 p-1"><br><br>
+                    <div class="justify-center items-center flex">
+                        <button id="send-button"
+                            class="text-slate-100 border-2 p-1 px-6 rounded-xl justify-center hover:bg-gray-800  shadow-lg shadow-indigo-500/50 ">Send</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <br><br>
+
+
+    <main>
+
+
+
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg my-10 ">
+            <table
+                class="  text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mx-auto shadow-lg shadow-cyan-100/90 ">
+                <thead class=" text-gray-700 text-sm bg-slate-900 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Transaction Hash
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Block
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Timestap
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            From
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            To
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Value
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Difficulty
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Nonce
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Previous Hash
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Block Hash
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="blockchainTableBody">
+
+
+                </tbody>
+            </table>
+        </div>
+
+
+    </main>
+
+    <script>
+
+
+
+
+
+
+        let account;
+
+        var transactionhash = "";
+        var Balance12 = "";
+        var From_transaction = "";
+        var To_transaction = "";
+        document.getElementById('connect-button').addEventListener('click', event => {
+
+            let button = event.target;
+            const Holder_address = document.getElementById('Holder_address');
+            const Connection_status = document.getElementById('Connection_status');
+            let z = document.getElementById('copy-button');
+
+            const Holder_Balance = document.getElementById('Holder_Balance');
+            ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
+                account = accounts[0];
+                From_transaction = account;
+
+
+                // button.textContent = account;
+                Holder_address.innerText = account;
+                z.style.display = "block";
+                Connection_status.innerHTML = "Connected";
+
+
+
+
+                ethereum.request({ method: 'eth_getBalance', params: [account, 'latest'] }).then(result => {
+                    console.log(result);
+                    let wei = parseInt(result, 16);
+                    let balance = wei / (10 ** 18);
+                    console.log(balance + "ETH");
+                    Holder_Balance.innerHTML = balance + " ETH";
+
+                });
+            });
+        });
+
+
+
+
+
+
+
+        let OtherAccount_inlist = "";
+        let send_amount = "";
+        let x1;
+        let y1;
+        document.getElementById('send-button').addEventListener('click', event => {
+            var OtherAccount = document.getElementById('OtherAccount').value;
+            OtherAccount_inlist = OtherAccount;
+            To_transaction = OtherAccount;
+
+            // Function to convert Ether to Wei
+            function etherToWei(ether) {
+                // Convert Ether to Wei
+                return BigInt(Math.floor(ether * 10 ** 18));
+            }
+
+            // Function to convert Wei to hexadecimal
+            function weiToHex(wei) {
+                // Convert BigInt Wei to hexadecimal
+                return '0x' + wei.toString(16);
+            }
+
+            let etherAmount = parseFloat(document.getElementById('AmountToSend').value);
+            if (!isNaN(etherAmount)) {
+                // Convert Ether to Wei
+                let weiValue = etherToWei(etherAmount);
+
+                // Convert Wei to hexadecimal
+                let hexValue = weiToHex(weiValue);
+
+                // Assign the hexadecimal value to variable x
+                var x = hexValue;
+                send_amount = x;
+                Balance12 = x;
+
+
+
+                console.log("x: ", x); // Output the value of x
+            } else {
+                console.error("Invalid input: Not a number");
+            }
+            let transactionParam = {
+                to: OtherAccount,
+                from: account,
+                value: x
+            };
+
+
+            ethereum.request({ method: 'eth_sendTransaction', params: [transactionParam] }).then(txhash => {
+                console.log(txhash);
+                transactionhash = txhash;
+                sendPostRequest();
+                checkTransactionconfirmation(txhash).then(r => {
+                    fetchBlockchainData();
+                    alert(r);
+
+                });
+            });
+        });
+
+
+        function Copy_button() {
+
+            let x = account;
+            navigator.clipboard.writeText(x);
+            let y = document.getElementById('copyicon');
+            if (y.name === 'copy-outline') {
+                y.name = 'checkmark-done-outline';
+                y.classList.add('border', 'border-gray-600', ' w-8');
+            }
+            else {
+                y.name = 'copy-outline';
+            }
+        }
+
+
+
+
+        function checkTransactionconfirmation(txHash) {
+
+            let checkTransactionLoop = () => {
+                return ethereum.request({ method: 'eth_getTransactionReceipt', params: [txHash] }).then(r => {
+                    if (r != null) return 'confirmed';
+                    else return checkTransactionLoop();
+                });
+            };
+
+            return checkTransactionLoop();
+
+        }
+
+
+        let inputElement = document.getElementById("input1");
+
+        async function fetchBlockchainData() {
+            try {
+                const response = await fetch('/api/blocks');
+                const blockchain = await response.json();
+                // const blockchainDataElement = document.getElementById('blockchainData');
+                const blockchainTableBody = document.getElementById('blockchainTableBody');
+                // blockchainDataElement.innerText = JSON.stringify(blockchain, null, 2);
+                let total_number_of_blocks = document.getElementById('total_number_of_blocks');
+
+                // Clear previous table rows
+                blockchainTableBody.innerHTML = '';
+                let index = 1;
+
+                // const x_sender = localStorage.getItem('sender_account');
+                // const y_recipient = localStorage.getItem('recipient');
+
+
+                // Populate table rows with blockchain data
+                blockchain.forEach(block => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">${block.data}</th>
+                        <td class="px-6 py-4">${index}</td>
+                        <td class="px-6 py-4">${block.timestamp}</td>
+                        <td class="px-6 py-4">${block.From}</td>
+                        <td class="px-6 py-4">${block.To}</td>
+                        <td class="px-6 py-4">${block.value}</td>
+                        <td class="px-6 py-4">${block.difficulty}</td>
+                        <td class="px-6 py-4">${block.nonce}</td>
+                        <td class="px-6 py-4">${block.prevHash}</td>
+                        <td class="px-6 py-4">${block.hash}</td>
+                        
+                       
+                    `;
+                    blockchainTableBody.appendChild(row);
+                    index++;
+                    total_number_of_blocks.innerText = index - 1;
+                });
+
+
+            } catch (error) {
+                console.error('Error fetching blockchain data:', error);
+            }
+        }
+
+        async function sendPostRequest() {
+            try {
+                data = await { "data": transactionhash, "value": Balance12, "From": From_transaction, "To": To_transaction };
+                const response = await fetch('/api/mine', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                if (response.ok) {
+                    console.log('POST request sent successfully');
+                    // Optionally, fetch and display updated blockchain data after sending the POST request
+
+
+                    fetchBlockchainData();
+                } else {
+                    console.error('Failed to send POST request:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error sending POST request:', error);
+            }
+        }
+
+
+
+        fetchBlockchainData();
+
+
+    </script>
+</body>
+
+</html>
